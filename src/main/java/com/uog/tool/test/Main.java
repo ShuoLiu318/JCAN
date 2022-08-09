@@ -1,4 +1,4 @@
-package com.uog.antlr4.test;
+/*package com.uog.antlr4.test;
 
 import out.CANLexer;
 import out.CANParser;
@@ -15,7 +15,7 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         // 再使用 tokens 构造语法分析器 parser,至此已经完成词法分析和语法分析的准备工作
         CANParser parser = new CANParser(tokens);
-        // 最终调用语法分析器的规则 r（这个是我们在Hello.g4里面定义的那个规则），完成对表达式的验证
+        // 最终调用语法分析器的规则 r（这个是我们在CAN.g4里面定义的那个规则），完成对表达式的验证
         parser.expr();
     }
 
@@ -23,6 +23,7 @@ public class Main {
         String[] testStr={
                 "InitBeliefs{a,!b};",
                 "Event{e1,e2};",
+                "//aaa",
                 "Plan p:c&d<-goal(e,p1,x);ee;",
                 "Action a : true <- <{nil},{uu}>;"
         };
@@ -31,4 +32,4 @@ public class Main {
             run(s);
         }
     }
-}
+}*/

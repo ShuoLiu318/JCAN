@@ -6,7 +6,12 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+
+import com.uog.can.antlr4.out.CANLexer;
+import com.uog.can.antlr4.out.CANParser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Parser;
 
 public class Can {
     // ensure we don’t try to execute code that has a known error
@@ -44,16 +49,33 @@ public class Can {
 
 
     private static void run(String source) {
-        Scanner scanner = new Scanner(source);
-        List<Token> tokens = scanner.scanTokens();
+        /*Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();*/
 
-        // For now, just print the tokens.
+        // 对每一个输入的字符串，构造一个 ANTLRStringStream 流 in
+        ANTLRInputStream input = new ANTLRInputStream(source);
+        // 用 in 构造词法分析器 lexer，词法分析的作用是将字符聚集成单词或者符号
+        CANLexer lexer = new CANLexer(input);
+        // 用词法分析器 lexer 构造一个记号流 tokens
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        // 再使用 tokens 构造语法分析器 parser,至此已经完成词法分析和语法分析的准备工作
+        CANParser parser = new CANParser(tokens);
+        // 最终调用语法分析器的规则 r（这个是我们在CAN.g4里面定义的那个规则），完成对表达式的验证
+        parser.expr();
+
+        ParserTree
+
+        System.out.println();
+        System.out.println();
+
+
+        /*// For now, just print the tokens.
         for (Token token : tokens) {
             System.out.println(token);
         }
 
         // Indicate an error in the exit code.
-        if (hadError) System.exit(65);
+        if (hadError) System.exit(65);*/
     }
 
 
