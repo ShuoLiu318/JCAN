@@ -19,11 +19,11 @@ public class CANParser extends Parser {
 		ACTION=17, AND=18, OR=19, PARALLEL=20, NEGATION=21, SEQ=22, FAIL=23, NAME=24, 
 		NEWLINE=25, WS=26, COMMENT=27, MULTILINE_COMMENT=28;
 	public static final int
-		RULE_c_text = 0, RULE_stat = 1, RULE_expr = 2, RULE_atom = 3, RULE_atomList = 4, 
+		RULE_c_text = 0, RULE_stat = 1, RULE_expr = 2, RULE_atom = 3, RULE_atomlist = 4, 
 		RULE_preCon = 5;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"c_text", "stat", "expr", "atom", "atomList", "preCon"
+			"c_text", "stat", "expr", "atom", "atomlist", "preCon"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -265,8 +265,8 @@ public class CANParser extends Parser {
 		}
 	}
 	public static class BeliefEventsContext extends ExprContext {
-		public AtomListContext atomList() {
-			return getRuleContext(AtomListContext.class,0);
+		public AtomlistContext atomlist() {
+			return getRuleContext(AtomlistContext.class,0);
 		}
 		public BeliefEventsContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
@@ -381,11 +381,11 @@ public class CANParser extends Parser {
 		public PreConContext preCon() {
 			return getRuleContext(PreConContext.class,0);
 		}
-		public List<AtomListContext> atomList() {
-			return getRuleContexts(AtomListContext.class);
+		public List<AtomlistContext> atomlist() {
+			return getRuleContexts(AtomlistContext.class);
 		}
-		public AtomListContext atomList(int i) {
-			return getRuleContext(AtomListContext.class,i);
+		public AtomlistContext atomlist(int i) {
+			return getRuleContext(AtomlistContext.class,i);
 		}
 		public ActBodyContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
@@ -506,7 +506,7 @@ public class CANParser extends Parser {
 				setState(31);
 				match(T__0);
 				setState(32);
-				atomList();
+				atomlist();
 				setState(33);
 				match(T__1);
 				}
@@ -562,7 +562,7 @@ public class CANParser extends Parser {
 				setState(49);
 				match(T__0);
 				setState(50);
-				atomList();
+				atomlist();
 				setState(51);
 				match(T__1);
 				setState(52);
@@ -570,7 +570,7 @@ public class CANParser extends Parser {
 				setState(53);
 				match(T__0);
 				setState(54);
-				atomList();
+				atomlist();
 				setState(55);
 				match(T__1);
 				setState(56);
@@ -953,46 +953,46 @@ public class CANParser extends Parser {
 		return _localctx;
 	}
 
-	public static class AtomListContext extends ParserRuleContext {
-		public AtomListContext(ParserRuleContext parent, int invokingState) {
+	public static class AtomlistContext extends ParserRuleContext {
+		public AtomlistContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_atomList; }
+		@Override public int getRuleIndex() { return RULE_atomlist; }
 	 
-		public AtomListContext() { }
-		public void copyFrom(AtomListContext ctx) {
+		public AtomlistContext() { }
+		public void copyFrom(AtomlistContext ctx) {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class AtomlistContext extends AtomListContext {
+	public static class AtomListContext extends AtomlistContext {
 		public List<AtomContext> atom() {
 			return getRuleContexts(AtomContext.class);
 		}
 		public AtomContext atom(int i) {
 			return getRuleContext(AtomContext.class,i);
 		}
-		public AtomlistContext(AtomListContext ctx) { copyFrom(ctx); }
+		public AtomListContext(AtomlistContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).enterAtomlist(this);
+			if ( listener instanceof CANListener ) ((CANListener)listener).enterAtomList(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).exitAtomlist(this);
+			if ( listener instanceof CANListener ) ((CANListener)listener).exitAtomList(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CANVisitor ) return ((CANVisitor<? extends T>)visitor).visitAtomlist(this);
+			if ( visitor instanceof CANVisitor ) return ((CANVisitor<? extends T>)visitor).visitAtomList(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final AtomListContext atomList() throws RecognitionException {
-		AtomListContext _localctx = new AtomListContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_atomList);
+	public final AtomlistContext atomlist() throws RecognitionException {
+		AtomlistContext _localctx = new AtomlistContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_atomlist);
 		int _la;
 		try {
-			_localctx = new AtomlistContext(_localctx);
+			_localctx = new AtomListContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(91);
@@ -1038,8 +1038,8 @@ public class CANParser extends Parser {
 		}
 	}
 	public static class ConditionContext extends PreConContext {
-		public AtomListContext atomList() {
-			return getRuleContext(AtomListContext.class,0);
+		public AtomlistContext atomlist() {
+			return getRuleContext(AtomlistContext.class,0);
 		}
 		public ConditionContext(PreConContext ctx) { copyFrom(ctx); }
 		@Override
@@ -1065,7 +1065,7 @@ public class CANParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(99);
-			atomList();
+			atomlist();
 			}
 		}
 		catch (RecognitionException re) {

@@ -234,17 +234,17 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitAtomName(CANParser.AtomNameContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code atomlist}
-	 * labeled alternative in {@link CANParser#atomList}.
+	 * Enter a parse tree produced by the {@code atomList}
+	 * labeled alternative in {@link CANParser#atomlist}.
 	 * @param ctx the parse tree
 	 */
-	void enterAtomlist(CANParser.AtomlistContext ctx);
+	void enterAtomList(CANParser.AtomListContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code atomlist}
-	 * labeled alternative in {@link CANParser#atomList}.
+	 * Exit a parse tree produced by the {@code atomList}
+	 * labeled alternative in {@link CANParser#atomlist}.
 	 * @param ctx the parse tree
 	 */
-	void exitAtomlist(CANParser.AtomlistContext ctx);
+	void exitAtomList(CANParser.AtomListContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code condition}
 	 * labeled alternative in {@link CANParser#preCon}.

@@ -150,7 +150,7 @@ public class CANBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements CA
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitAtomlist(CANParser.AtomlistContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAtomList(CANParser.AtomListContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

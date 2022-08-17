@@ -143,12 +143,12 @@ public interface CANVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAtomName(CANParser.AtomNameContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code atomlist}
-	 * labeled alternative in {@link CANParser#atomList}.
+	 * Visit a parse tree produced by the {@code atomList}
+	 * labeled alternative in {@link CANParser#atomlist}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAtomlist(CANParser.AtomlistContext ctx);
+	T visitAtomList(CANParser.AtomListContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code condition}
 	 * labeled alternative in {@link CANParser#preCon}.

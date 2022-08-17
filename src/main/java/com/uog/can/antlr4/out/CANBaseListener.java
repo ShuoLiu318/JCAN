@@ -244,13 +244,13 @@ public class CANBaseListener implements CANListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtomlist(CANParser.AtomlistContext ctx) { }
+	@Override public void enterAtomList(CANParser.AtomListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtomlist(CANParser.AtomlistContext ctx) { }
+	@Override public void exitAtomList(CANParser.AtomListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

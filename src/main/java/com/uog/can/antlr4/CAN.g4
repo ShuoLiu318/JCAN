@@ -14,29 +14,29 @@ expr
     | (type = 'Events') expr    # externalEvent
     | (type = 'Plan') expr      # plan
     | (type = 'Action') expr    # act
-    | '{' atomList '}'          # beliefEvents
+    | '{' atomlist '}'          # beliefEvents
     | atom ':' preCon '<-' expr+    # planBody
-    | atom ':' preCon '<-' '<' '{' atomList '}' ',' '{' atomList '}' '>'    # actBody
+    | atom ':' preCon '<-' '<' '{' atomlist '}' ',' '{' atomlist '}' '>'    # actBody
     | atom                                                                  # atoms
     ;
 
 atom
-    : NAME                  # atomName
-    | ('true'|'false')      # bool
-    | '{' '}'               # emptyList
-    | atom (op = ('&'|'|')) atom    # beliefs
-    | atom (op = (';'|'>>'|'||')) atom   # programs
-    | 'nil'                         # emptyProgram
-    | 'goal' '(' atom ',' atom ',' atom ')' # goal
-    | (op = '!') atom           # negation
+    : NAME                                      # atomName
+    | ('true'|'false')                          # bool
+    | '{' '}'                                   # emptyList
+    | atom (op = ('&'|'|')) atom                # beliefs
+    | atom (op = (';'|'>>'|'||')) atom          # programs
+    | 'nil'                                     # emptyProgram
+    | 'goal' '(' atom ',' atom ',' atom ')'     # goal
+    | (op = '!') atom                           # negation
     ;
 
-atomList
-    : atom (',' atom)*      # atomlist
+atomlist
+    : atom (',' atom)*      # atomList
     ;
 
 preCon
-    : atomList              # condition
+    : atomlist              # condition
     ;
 /*
 // belief
