@@ -9,9 +9,11 @@ import java.nio.file.Paths;
 
 import com.uog.can.antlr4.out.CANLexer;
 import com.uog.can.antlr4.out.CANParser;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.tree.*;
 
 public class Can {
     // ensure we don’t try to execute code that has a known error
@@ -42,9 +44,12 @@ public class Can {
             System.out.print("> ");
             String line = reader.readLine();
             if (line == null) break;
-            run(line);
+            run(line + '\n');
             hadError = false;
         }
+
+        /*String source = "Beliefs {a,b} \n Events {e} \n";
+        run(source);*/
     }
 
 
@@ -61,12 +66,9 @@ public class Can {
         // 再使用 tokens 构造语法分析器 parser,至此已经完成词法分析和语法分析的准备工作
         CANParser parser = new CANParser(tokens);
         // 最终调用语法分析器的规则 r（这个是我们在CAN.g4里面定义的那个规则），完成对表达式的验证
-        parser.expr();
+        ParseTree tree = parser.c_text();
 
-        ParserTree
-
-        System.out.println();
-        System.out.println();
+        System.out.println(tree);
 
 
         /*// For now, just print the tokens.
@@ -97,13 +99,15 @@ public class Can {
 
 
     public static void main(String[] args) throws IOException {
-        if (args.length > 1) {
+        /*if (args.length > 1) {
             System.out.println("Usage: jcan [script]");
             System.exit(64);
         } else if (args.length == 1) {
             runFile(args[0]);
         } else {
             runPrompt();
-        }
+        }*/
+
+
     }
 }

@@ -1,24 +1,54 @@
 grammar CAN;
 
-expr: (beliefs
-    | events
-    | plan
-    | action ) * EOF;
-
-atom
-    : NAME
+c_text
+    : stat+
     ;
 
+stat
+    : expr NEWLINE              # printExpr
+    | NEWLINE                   # blank
+    ;
+
+expr
+    : (type = 'Beliefs') expr   # initBelief
+    | (type = 'Events') expr    # externalEvent
+    | (type = 'Plan') expr      # plan
+    | (type = 'Action') expr    # act
+    | '{' atomList '}'          # beliefEvents
+    | atom ':' preCon '<-' expr+    # planBody
+    | atom ':' preCon '<-' '<' '{' atomList '}' ',' '{' atomList '}' '>'    # actBody
+    | atom                                                                  # atoms
+    ;
+
+atom
+    : NAME                  # atomName
+    | ('true'|'false')      # bool
+    | '{' '}'               # emptyList
+    | atom (op = ('&'|'|')) atom    # beliefs
+    | atom (op = (';'|'>>'|'||')) atom   # programs
+    | 'nil'                         # emptyProgram
+    | 'goal' '(' atom ',' atom ',' atom ')' # goal
+    | (op = '!') atom           # negation
+    ;
+
+atomList
+    : atom (',' atom)*      # atomlist
+    ;
+
+preCon
+    : atomList              # condition
+    ;
+/*
 // belief
 belief
-    : operator* atom // !atom
-    | belief (operator belief)+
-    | 'true'
+    :  (op = '!')* atom
+    | belief (op= ('&'|'|') belief)+
     | 'false'
+    | 'true'
     ;
 
 beliefs
-    : 'Beliefs' '{' beliefList '}'
+    : (type = 'Beliefs') '{' beliefList '}'
     ;
 
 beliefList
@@ -26,12 +56,13 @@ beliefList
     | 'nil'
     ;
 
-events
-    : 'Events' '{' eventList '}'
-    ;
-
+//event
 event
     : atom
+    ;
+
+events
+    : (type = 'Events') '{' eventList '}'
     ;
 
 eventList
@@ -42,40 +73,61 @@ eventList
 // plan
 plan
     : atom
-    | 'Plan' plan ':' event '<-' planBody
+    | (type = 'Plan') plan ':' preCon '<-' planBody
     | 'goal' '(' beliefList ',' plan ',' belief ')'
     ;
 
 planBody
-    : plan ((operator | ';') plan)*
+    : (plan | action) ( op=( ';' | '>>' | '||') (plan | action) )*
     ;
 
+*/
 /*goal
     : 'goal' '(' beliefList ',' plan ',' belief ')'
-    ;*/
+    ;*//*
+
 
 // action
 action
     : atom
-    | 'Action' action ':' preCon '<-' '<' '{' beliefList '}' ',' '{' beliefList '}' '>'
+    | (type = 'Action') action ':' preCon '<-' '<' '{' beliefList '}' ',' '{' beliefList '}' '>'
     ;
 
 preCon
     : beliefList
     ;
+*/
+
+// atomType
+BELIEFS : 'Beliefs';
+EVENTS : 'Events';
+PLAN : 'Plan';
+ACTION : 'Action';
 
 // op
-operator
-    : '&'  // and
-    | '|'  // or
-    | '||' // paralleism
-    | '!' // negative
-    | '>>' // the execution of P1, and the execution of P2 if P1 fails
-    ;
+AND : '&';
+OR : '|';
+PARALLEL : '||';
+NEGATION : '!';
+SEQ : ';';
+FAIL : '>>';
+
+// op
+/*op
+    : '&'  //and
+    | '|'  //or
+    | '||' //paralleism
+    | '!' //negative
+    | '>>' // P1>>P2: the execution of P1, and the execution of P2 if P1 fails
+    |  ';'
+    ;*/
 
 NAME
     : [a-zA-Z_][a-zA-Z_0-9]*
     ;
+
+NEWLINE:'\r'? '\n' ;     // 换行
+WS  :   [ \t]+ -> skip ; // 匹配空白，按->skip命令跳过
 
 // comment
 COMMENT: '//' ~[\n\r]* ( [\n\r] | EOF) -> channel(HIDDEN) ;
