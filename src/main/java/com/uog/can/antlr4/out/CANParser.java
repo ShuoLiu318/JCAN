@@ -15,9 +15,9 @@ public class CANParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, BELIEFS=14, EVENTS=15, PLAN=16, 
-		ACTION=17, AND=18, OR=19, PARALLEL=20, NEGATION=21, SEQ=22, FAIL=23, NAME=24, 
-		NEWLINE=25, WS=26, COMMENT=27, MULTILINE_COMMENT=28;
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, BELIEFS=15, EVENTS=16, 
+		PLAN=17, ACTION=18, AND=19, OR=20, PARALLEL=21, NEGATION=22, FAIL=23, 
+		NAME=24, NEWLINE=25, WS=26, COMMENT=27, MULTILINE_COMMENT=28;
 	public static final int
 		RULE_c_text = 0, RULE_stat = 1, RULE_expr = 2, RULE_atom = 3, RULE_planBody = 4, 
 		RULE_preCon = 5, RULE_add = 6, RULE_delete = 7;
@@ -31,16 +31,16 @@ public class CANParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'{'", "','", "'}'", "':'", "'<-'", "'<'", "'>'", "'true'", "'false'", 
-			"'nil'", "'goal'", "'('", "')'", "'initBelief'", "'externalEvent'", "'Plan'", 
-			"'Action'", "'&'", "'|'", "'||'", "'!'", "';'", "'>>'"
+			"'nil'", "'goal'", "'('", "')'", "';'", "'initBelief'", "'externalEvent'", 
+			"'Plan'", "'Action'", "'&'", "'|'", "'||'", "'!'", "'>>'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, "BELIEFS", "EVENTS", "PLAN", "ACTION", "AND", "OR", "PARALLEL", 
-			"NEGATION", "SEQ", "FAIL", "NAME", "NEWLINE", "WS", "COMMENT", "MULTILINE_COMMENT"
+			null, null, null, "BELIEFS", "EVENTS", "PLAN", "ACTION", "AND", "OR", 
+			"PARALLEL", "NEGATION", "FAIL", "NAME", "NEWLINE", "WS", "COMMENT", "MULTILINE_COMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -770,10 +770,6 @@ public class CANParser extends Parser {
 		public AtomContext atom(int i) {
 			return getRuleContext(AtomContext.class,i);
 		}
-		public List<TerminalNode> SEQ() { return getTokens(CANParser.SEQ); }
-		public TerminalNode SEQ(int i) {
-			return getToken(CANParser.SEQ, i);
-		}
 		public PlanBodyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -800,11 +796,11 @@ public class CANParser extends Parser {
 			setState(108);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==SEQ) {
+			while (_la==T__13) {
 				{
 				{
 				setState(104);
-				match(SEQ);
+				match(T__13);
 				setState(105);
 				atom(0);
 				}
@@ -1071,7 +1067,7 @@ public class CANParser extends Parser {
 		"{\b\u0006\n\u0006\f\u0006~\t\u0006\u0001\u0007\u0001\u0007\u0001\u0007"+
 		"\u0005\u0007\u0083\b\u0007\n\u0007\f\u0007\u0086\t\u0007\u0001\u0007\u0000"+
 		"\u0001\u0006\b\u0000\u0002\u0004\u0006\b\n\f\u000e\u0000\u0003\u0001\u0000"+
-		"\b\t\u0001\u0000\u0012\u0013\u0002\u0000\u0014\u0014\u0017\u0017\u0090"+
+		"\b\t\u0001\u0000\u0013\u0014\u0002\u0000\u0015\u0015\u0017\u0017\u0090"+
 		"\u0000\u0011\u0001\u0000\u0000\u0000\u0002\u0019\u0001\u0000\u0000\u0000"+
 		"\u0004I\u0001\u0000\u0000\u0000\u0006Z\u0001\u0000\u0000\u0000\bg\u0001"+
 		"\u0000\u0000\u0000\no\u0001\u0000\u0000\u0000\fw\u0001\u0000\u0000\u0000"+
@@ -1082,19 +1078,19 @@ public class CANParser extends Parser {
 		"\u0016\u0017\u0005\u0019\u0000\u0000\u0017\u001a\u0001\u0000\u0000\u0000"+
 		"\u0018\u001a\u0005\u0019\u0000\u0000\u0019\u0015\u0001\u0000\u0000\u0000"+
 		"\u0019\u0018\u0001\u0000\u0000\u0000\u001a\u0003\u0001\u0000\u0000\u0000"+
-		"\u001b\u001c\u0005\u000e\u0000\u0000\u001c\u001d\u0005\u0001\u0000\u0000"+
+		"\u001b\u001c\u0005\u000f\u0000\u0000\u001c\u001d\u0005\u0001\u0000\u0000"+
 		"\u001d\"\u0003\u0006\u0003\u0000\u001e\u001f\u0005\u0002\u0000\u0000\u001f"+
 		"!\u0003\u0006\u0003\u0000 \u001e\u0001\u0000\u0000\u0000!$\u0001\u0000"+
 		"\u0000\u0000\" \u0001\u0000\u0000\u0000\"#\u0001\u0000\u0000\u0000#%\u0001"+
 		"\u0000\u0000\u0000$\"\u0001\u0000\u0000\u0000%&\u0005\u0003\u0000\u0000"+
-		"&J\u0001\u0000\u0000\u0000\'(\u0005\u000f\u0000\u0000()\u0005\u0001\u0000"+
+		"&J\u0001\u0000\u0000\u0000\'(\u0005\u0010\u0000\u0000()\u0005\u0001\u0000"+
 		"\u0000).\u0003\u0006\u0003\u0000*+\u0005\u0002\u0000\u0000+-\u0003\u0006"+
 		"\u0003\u0000,*\u0001\u0000\u0000\u0000-0\u0001\u0000\u0000\u0000.,\u0001"+
 		"\u0000\u0000\u0000./\u0001\u0000\u0000\u0000/1\u0001\u0000\u0000\u0000"+
 		"0.\u0001\u0000\u0000\u000012\u0005\u0003\u0000\u00002J\u0001\u0000\u0000"+
-		"\u000034\u0005\u0010\u0000\u000045\u0003\u0006\u0003\u000056\u0005\u0004"+
+		"\u000034\u0005\u0011\u0000\u000045\u0003\u0006\u0003\u000056\u0005\u0004"+
 		"\u0000\u000067\u0003\n\u0005\u000078\u0005\u0005\u0000\u000089\u0003\b"+
-		"\u0004\u00009J\u0001\u0000\u0000\u0000:;\u0005\u0011\u0000\u0000;<\u0003"+
+		"\u0004\u00009J\u0001\u0000\u0000\u0000:;\u0005\u0012\u0000\u0000;<\u0003"+
 		"\u0006\u0003\u0000<=\u0005\u0004\u0000\u0000=>\u0003\n\u0005\u0000>?\u0005"+
 		"\u0005\u0000\u0000?@\u0005\u0006\u0000\u0000@A\u0005\u0001\u0000\u0000"+
 		"AB\u0003\f\u0006\u0000BC\u0005\u0003\u0000\u0000CD\u0005\u0002\u0000\u0000"+
@@ -1103,7 +1099,7 @@ public class CANParser extends Parser {
 		"\u0000\u0000\u0000I\'\u0001\u0000\u0000\u0000I3\u0001\u0000\u0000\u0000"+
 		"I:\u0001\u0000\u0000\u0000J\u0005\u0001\u0000\u0000\u0000KL\u0006\u0003"+
 		"\uffff\uffff\u0000L[\u0005\u0018\u0000\u0000M[\u0007\u0000\u0000\u0000"+
-		"N[\u0005\n\u0000\u0000OP\u0005\u0015\u0000\u0000P[\u0003\u0006\u0003\u0002"+
+		"N[\u0005\n\u0000\u0000OP\u0005\u0016\u0000\u0000P[\u0003\u0006\u0003\u0002"+
 		"QR\u0005\u000b\u0000\u0000RS\u0005\f\u0000\u0000ST\u0003\u0006\u0003\u0000"+
 		"TU\u0005\u0002\u0000\u0000UV\u0003\u0006\u0003\u0000VW\u0005\u0002\u0000"+
 		"\u0000WX\u0003\u0006\u0003\u0000XY\u0005\r\u0000\u0000Y[\u0001\u0000\u0000"+
@@ -1114,7 +1110,7 @@ public class CANParser extends Parser {
 		"ac\u0003\u0006\u0003\u0005b\\\u0001\u0000\u0000\u0000b_\u0001\u0000\u0000"+
 		"\u0000cf\u0001\u0000\u0000\u0000db\u0001\u0000\u0000\u0000de\u0001\u0000"+
 		"\u0000\u0000e\u0007\u0001\u0000\u0000\u0000fd\u0001\u0000\u0000\u0000"+
-		"gl\u0003\u0006\u0003\u0000hi\u0005\u0016\u0000\u0000ik\u0003\u0006\u0003"+
+		"gl\u0003\u0006\u0003\u0000hi\u0005\u000e\u0000\u0000ik\u0003\u0006\u0003"+
 		"\u0000jh\u0001\u0000\u0000\u0000kn\u0001\u0000\u0000\u0000lj\u0001\u0000"+
 		"\u0000\u0000lm\u0001\u0000\u0000\u0000m\t\u0001\u0000\u0000\u0000nl\u0001"+
 		"\u0000\u0000\u0000ot\u0003\u0006\u0003\u0000pq\u0005\u0002\u0000\u0000"+

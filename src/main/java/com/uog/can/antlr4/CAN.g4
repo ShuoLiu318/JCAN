@@ -10,10 +10,10 @@ stat
     ;
 
 expr
-    : (type = 'initBelief') '{' atom (',' atom)* '}'                                                    # initBelief
-    | (type = 'externalEvent') '{' atom (',' atom)* '}'                                                 # externalEvent
-    | (type = 'Plan') atom ':' preCon '<-' planBody                                                     # plan
-    | (type = 'Action') atom ':' preCon '<-' '<' '{' add '}' ',' '{' delete '}' '>'                     # action
+    : (type = 'initBelief') '{' atom (',' atom)* '}'                                       # initBelief
+    | (type = 'externalEvent') '{' atom (',' atom)* '}'                                    # externalEvent
+    | (type = 'Plan') atom ':' preCon '<-' planBody                                        # plan
+    | (type = 'Action') atom ':' preCon '<-' '<' '{' add '}' ',' '{' delete '}' '>'        # action
     ;
 
 atom
