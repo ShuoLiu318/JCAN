@@ -1,0 +1,6 @@
+//initBelief {a,!b}
+//externalEvent {e}
+
+//Plan p: d <- d;e
+
+Action act : true <- <{f},{a}>

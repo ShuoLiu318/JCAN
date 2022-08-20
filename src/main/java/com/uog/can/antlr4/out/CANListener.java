@@ -78,77 +78,17 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitPlan(CANParser.PlanContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code act}
+	 * Enter a parse tree produced by the {@code action}
 	 * labeled alternative in {@link CANParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAct(CANParser.ActContext ctx);
+	void enterAction(CANParser.ActionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code act}
+	 * Exit a parse tree produced by the {@code action}
 	 * labeled alternative in {@link CANParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAct(CANParser.ActContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code beliefEvents}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBeliefEvents(CANParser.BeliefEventsContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code beliefEvents}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBeliefEvents(CANParser.BeliefEventsContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code planBody}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterPlanBody(CANParser.PlanBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code planBody}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitPlanBody(CANParser.PlanBodyContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code actBody}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterActBody(CANParser.ActBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code actBody}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitActBody(CANParser.ActBodyContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code atoms}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterAtoms(CANParser.AtomsContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code atoms}
-	 * labeled alternative in {@link CANParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitAtoms(CANParser.AtomsContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code emptyList}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void enterEmptyList(CANParser.EmptyListContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code emptyList}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void exitEmptyList(CANParser.EmptyListContext ctx);
+	void exitAction(CANParser.ActionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code negation}
 	 * labeled alternative in {@link CANParser#atom}.
@@ -186,18 +126,6 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitBool(CANParser.BoolContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code emptyProgram}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void enterEmptyProgram(CANParser.EmptyProgramContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code emptyProgram}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void exitEmptyProgram(CANParser.EmptyProgramContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code programs}
 	 * labeled alternative in {@link CANParser#atom}.
 	 * @param ctx the parse tree
@@ -234,17 +162,27 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitAtomName(CANParser.AtomNameContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code atomList}
-	 * labeled alternative in {@link CANParser#atomlist}.
+	 * Enter a parse tree produced by the {@code empty}
+	 * labeled alternative in {@link CANParser#atom}.
 	 * @param ctx the parse tree
 	 */
-	void enterAtomList(CANParser.AtomListContext ctx);
+	void enterEmpty(CANParser.EmptyContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code atomList}
-	 * labeled alternative in {@link CANParser#atomlist}.
+	 * Exit a parse tree produced by the {@code empty}
+	 * labeled alternative in {@link CANParser#atom}.
 	 * @param ctx the parse tree
 	 */
-	void exitAtomList(CANParser.AtomListContext ctx);
+	void exitEmpty(CANParser.EmptyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CANParser#planBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterPlanBody(CANParser.PlanBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CANParser#planBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitPlanBody(CANParser.PlanBodyContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code condition}
 	 * labeled alternative in {@link CANParser#preCon}.
@@ -257,4 +195,28 @@ public interface CANListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCondition(CANParser.ConditionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code addBelief}
+	 * labeled alternative in {@link CANParser#add}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddBelief(CANParser.AddBeliefContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code addBelief}
+	 * labeled alternative in {@link CANParser#add}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddBelief(CANParser.AddBeliefContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code deleteBelief}
+	 * labeled alternative in {@link CANParser#delete}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeleteBelief(CANParser.DeleteBeliefContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code deleteBelief}
+	 * labeled alternative in {@link CANParser#delete}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeleteBelief(CANParser.DeleteBeliefContext ctx);
 }

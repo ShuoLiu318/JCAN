@@ -47,9 +47,6 @@ public class Can {
             run(line + '\n');
             hadError = false;
         }
-
-        /*String source = "Beliefs {a,b} \n Events {e} \n";
-        run(source);*/
     }
 
 
@@ -65,10 +62,13 @@ public class Can {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         // 再使用 tokens 构造语法分析器 parser,至此已经完成词法分析和语法分析的准备工作
         CANParser parser = new CANParser(tokens);
-        // 最终调用语法分析器的规则 r（这个是我们在CAN.g4里面定义的那个规则），完成对表达式的验证
+        // 最终调用语法分析器的规则c_text（这个是我们在CAN.g4里面定义的那个规则），完成对表达式的验证
         ParseTree tree = parser.c_text();
 
-        System.out.println(tree);
+        ParseTreeWalker walker = new ParseTreeWalker();		//创建分析树的遍历器
+        walker.walk(new Interpreter(), tree);
+
+        System.out.println(tree.toStringTree(parser));
 
 
         /*// For now, just print the tokens.
@@ -99,7 +99,7 @@ public class Can {
 
 
     public static void main(String[] args) throws IOException {
-        /*if (args.length > 1) {
+       /* if (args.length > 1) {
             System.out.println("Usage: jcan [script]");
             System.exit(64);
         } else if (args.length == 1) {
@@ -108,6 +108,6 @@ public class Can {
             runPrompt();
         }*/
 
-
+        runFile( "src/main/java/com/uog/can/test/testFile");
     }
 }
