@@ -160,6 +160,21 @@ public class CANParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class ExpressionContext extends StatContext {
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode NEWLINE() { return getToken(CANParser.NEWLINE, 0); }
+		public ExpressionContext(StatContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CANListener ) ((CANListener)listener).enterExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CANListener ) ((CANListener)listener).exitExpression(this);
+		}
+	}
 	public static class BlankContext extends StatContext {
 		public TerminalNode NEWLINE() { return getToken(CANParser.NEWLINE, 0); }
 		public BlankContext(StatContext ctx) { copyFrom(ctx); }
@@ -170,21 +185,6 @@ public class CANParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof CANListener ) ((CANListener)listener).exitBlank(this);
-		}
-	}
-	public static class PrintExprContext extends StatContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode NEWLINE() { return getToken(CANParser.NEWLINE, 0); }
-		public PrintExprContext(StatContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).enterPrintExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).exitPrintExpr(this);
 		}
 	}
 
@@ -199,7 +199,7 @@ public class CANParser extends Parser {
 			case EVENTS:
 			case PLAN:
 			case ACTION:
-				_localctx = new PrintExprContext(_localctx);
+				_localctx = new ExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(21);

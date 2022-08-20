@@ -28,13 +28,13 @@ public class CANBaseListener implements CANListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrintExpr(CANParser.PrintExprContext ctx) { }
+	@Override public void enterExpression(CANParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrintExpr(CANParser.PrintExprContext ctx) { }
+	@Override public void exitExpression(CANParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

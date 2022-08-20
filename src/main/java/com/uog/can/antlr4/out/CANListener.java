@@ -18,17 +18,17 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitC_text(CANParser.C_textContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code printExpr}
+	 * Enter a parse tree produced by the {@code expression}
 	 * labeled alternative in {@link CANParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrintExpr(CANParser.PrintExprContext ctx);
+	void enterExpression(CANParser.ExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code printExpr}
+	 * Exit a parse tree produced by the {@code expression}
 	 * labeled alternative in {@link CANParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrintExpr(CANParser.PrintExprContext ctx);
+	void exitExpression(CANParser.ExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code blank}
 	 * labeled alternative in {@link CANParser#stat}.

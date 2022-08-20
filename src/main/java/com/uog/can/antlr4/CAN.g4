@@ -5,7 +5,7 @@ c_text
     ;
 
 stat
-    : expr NEWLINE              # printExpr
+    : expr NEWLINE              # expression
     | NEWLINE                   # blank
     ;
 

@@ -1,18 +1,15 @@
 package com.uog.can;
 
-import com.sun.org.apache.bcel.internal.generic.LSTORE;
 import com.uog.can.antlr4.out.CANBaseListener;
 import com.uog.can.antlr4.out.CANParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import sun.security.util.Length;
 
 import java.util.*;
 
 public class Interpreter extends CANBaseListener {
-
     // 用于交换变量
     private List<String> atoms = new ArrayList<>();
     // 存储所有的belief
@@ -23,24 +20,21 @@ public class Interpreter extends CANBaseListener {
     private List<String> plans = new ArrayList<>();
     // 存储所有的action的name
     private List<String> actions = new ArrayList<>();
-    // 存储所有的plan和action的前提条件
+    // 存储所有的plan和action的前提条件，key是plan或action的name，value是条件beliefs
     private Map<String, List> preCon = new HashMap<>();
     private Map<String, List> op = new HashMap<>();
-
+    // 存储所有的planBody中的program，key为plan的name，value为所有的program，如果遇到goal，就设置一个goal的名字。
     private Map<String, List> planBody = new HashMap<>();
-
-    // 存储所有planBody中的goal，key为plan的name，list为goal的名字
-    private Map<String, List> goals = new HashMap<>();
-
     // 存储所有的goal, key是goal的名字，List是goal的三个atom
-    private Map<String, List> goal = new HashMap<>();
-
+    private Map<String, List> goals = new HashMap<>();
     // 存储所有的action中的加变量和减变量操作
     Map<String, List> addBelief = new HashMap<>();
     Map<String, List> deleteBelief = new HashMap<>();
-
+    int goalCount = 0;
     // 当前正在遍历的plan或action的name
     String current = new String();
+    // 存储共有多少行代码
+    int line = 0;
 
     /*
      * 遍历atom节点，返回atom的名字
@@ -87,7 +81,7 @@ public class Interpreter extends CANBaseListener {
 
         body.addAll(atoms);
 
-        preCon.put(current, body); // to-do: 如何存储planBody
+        planBody.put(current, body);
 
         atoms.clear();
     }
@@ -95,6 +89,23 @@ public class Interpreter extends CANBaseListener {
     @Override
     public void exitGoal(CANParser.GoalContext ctx) {
 
+        goalCount++;
+
+        String goalName = "goal" + goalCount;
+
+        List<String> goalAtom = new ArrayList<>();
+
+        for(int i = atoms.size() - 3 ; i < atoms.size() ; i++ ){
+            goalAtom.add(atoms.get(i));
+        }
+
+        for (int i = 0 ; i < 3 ; i++){
+            atoms.remove(atoms.size() - 1);
+        }
+
+        goals.put(goalName, goalAtom);
+
+        atoms.add(goalName);
     }
 
     @Override
@@ -160,8 +171,10 @@ public class Interpreter extends CANBaseListener {
     /*
      * 会遍历很多次
      * */
+
     @Override
-    public void exitPrintExpr(CANParser.PrintExprContext ctx) {
+    public void exitExpression(CANParser.ExpressionContext ctx) {
+        line++;
     }
 
     /*
@@ -170,16 +183,26 @@ public class Interpreter extends CANBaseListener {
     @Override
     public void exitC_text(CANParser.C_textContext ctx) {
 
+        System.out.println(line);
+
         System.out.println("belief" + beliefs);
         System.out.println("event" + events);
         System.out.println("plans" + plans);
+        System.out.println("planBody" + planBody);
+        System.out.println("goal" + goals);
         System.out.println("actions" + actions);
         System.out.println("preCon" + preCon);
 
-        for(;;){
+        for(String event: events){
 
         }
 
+    }
+
+    /*
+    * 获得所有的数据后，进行执行
+    * c*/
+    private void execution(){
 
     }
 }
