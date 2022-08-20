@@ -2,10 +2,6 @@ package com.uog.can;
 
 import com.uog.can.antlr4.out.CANBaseListener;
 import com.uog.can.antlr4.out.CANParser;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.*;
 
@@ -183,8 +179,6 @@ public class Interpreter extends CANBaseListener {
     @Override
     public void exitC_text(CANParser.C_textContext ctx) {
 
-        System.out.println(line);
-
         System.out.println("belief" + beliefs);
         System.out.println("event" + events);
         System.out.println("plans" + plans);
@@ -193,16 +187,48 @@ public class Interpreter extends CANBaseListener {
         System.out.println("actions" + actions);
         System.out.println("preCon" + preCon);
 
-        for(String event: events){
-
+        for (int i = 0 ; i< events.size() ; i++){
+            execute(events.get(i));
         }
 
     }
 
     /*
     * 获得所有的数据后，进行执行
-    * c*/
-    private void execution(){
+    * */
+    private void execute(String event){
+        if (plans.contains(event)){
+
+        } else if (actions.contains(event)) {
+            // 如果event是个action，那就检查它的preCon是否满足，否则不执行
+            List<String> condition = new ArrayList<>();
+
+            condition.addAll(preCon.get(event));
+
+            boolean flag = true;
+
+            if (condition.toString().equals("true")) {
+
+            } else if(condition.toString().equals("false")){
+                flag = false;
+            } else if (!beliefs.containsAll(condition)){
+                flag = false;
+            }
+
+            if (flag) {
+                List<String> add = addBelief.get(event);
+                List<String> delete = deleteBelief.get(event);
+
+                beliefs.addAll(add);
+
+                for(int i = 0 ; i < delete.size(); i++){
+                    if(beliefs.contains(delete.get(i))){
+                        beliefs.removeAll(Collections.singleton(delete.get(i)));
+                    }
+                }
+            }
+
+        }
 
     }
 }

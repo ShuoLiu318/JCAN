@@ -1,5 +1,5 @@
 initBelief {a,!b}
-externalEvent {e}
+externalEvent {act}
 
 Plan p: d <- d;e;goal(a,b,false)
 
