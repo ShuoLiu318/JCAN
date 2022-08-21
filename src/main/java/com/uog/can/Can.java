@@ -108,6 +108,6 @@ public class Can {
             runPrompt();
         }*/
 
-        runFile( "src/main/java/com/uog/can/test/testFile");
+        runFile( "src/main/java/com/uog/can/test/demo");
     }
 }

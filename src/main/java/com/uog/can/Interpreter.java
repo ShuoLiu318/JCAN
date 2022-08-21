@@ -9,7 +9,7 @@ public class Interpreter extends CANBaseListener {
     // 用于交换变量
     private List<String> atoms = new ArrayList<>();
     // 存储所有的belief
-    private List<String> beliefs = new ArrayList<>();
+    private List<String> beliefs = new ArrayList<>(); // to-do: 用一个map存储所有的list，key为belief的name，value为boolean
     // 存储所有的event
     private List<String> events = new ArrayList<>();
     // 存储所有的plan的name
@@ -18,7 +18,6 @@ public class Interpreter extends CANBaseListener {
     private List<String> actions = new ArrayList<>();
     // 存储所有的plan和action的前提条件，key是plan或action的name，value是条件beliefs
     private Map<String, List> preCon = new HashMap<>();
-    private Map<String, List> op = new HashMap<>();
     // 存储所有的planBody中的program，key为plan的name，value为所有的program，如果遇到goal，就设置一个goal的名字。
     private Map<String, List> planBody = new HashMap<>();
     // 存储所有的goal, key是goal的名字，List是goal的三个atom
@@ -28,7 +27,7 @@ public class Interpreter extends CANBaseListener {
     Map<String, List> deleteBelief = new HashMap<>();
     int goalCount = 0;
     // 当前正在遍历的plan或action的name
-    String current = new String();
+    String current;
     // 存储共有多少行代码
     int line = 0;
 
@@ -187,9 +186,11 @@ public class Interpreter extends CANBaseListener {
         System.out.println("actions" + actions);
         System.out.println("preCon" + preCon);
 
-        for (int i = 0 ; i< events.size() ; i++){
-            execute(events.get(i));
+        for (String event : events){
+            execute(event);
         }
+
+        System.out.println("belief" + beliefs);
 
     }
 
@@ -197,38 +198,107 @@ public class Interpreter extends CANBaseListener {
     * 获得所有的数据后，进行执行
     * */
     private void execute(String event){
-        if (plans.contains(event)){
 
-        } else if (actions.contains(event)) {
-            // 如果event是个action，那就检查它的preCon是否满足，否则不执行
-            List<String> condition = new ArrayList<>();
+        System.out.println("executing " + event);
 
-            condition.addAll(preCon.get(event));
+        if(condition(event)){
+            if (plans.contains(event)){
+                System.out.println("executing plan " + event);
+                List<String> programs = new ArrayList<>();
+                programs.addAll(planBody.get(event));
 
-            boolean flag = true;
+                for (String program : programs){
+                    if (goals.containsKey(program)){
+                        System.out.println("executing " + program);
+                        executeGoal(program);
+                    } else {
+                        execute(program);
+                    }
+                }
 
-            if (condition.toString().equals("true")) {
+            } else if (actions.contains(event)) {
 
-            } else if(condition.toString().equals("false")){
-                flag = false;
-            } else if (!beliefs.containsAll(condition)){
-                flag = false;
-            }
+                System.out.println("executing action " + event);
 
-            if (flag) {
                 List<String> add = addBelief.get(event);
                 List<String> delete = deleteBelief.get(event);
 
-                beliefs.addAll(add);
-
-                for(int i = 0 ; i < delete.size(); i++){
-                    if(beliefs.contains(delete.get(i))){
-                        beliefs.removeAll(Collections.singleton(delete.get(i)));
+                // 将要添加的belief原子添加到belief列表中
+                for(String addAtom : add) {
+                    if (addAtom.contains("!")){
+                        beliefs.remove(addAtom.substring(1, addAtom.length()));
+                    } else if (!addAtom.contains("!")){
+                        beliefs.remove("!" + addAtom);
                     }
+                    beliefs.add(addAtom);
                 }
-            }
 
+                // 删除相应的beliefs原子
+                beliefs.removeAll(delete);
+
+                /*for(String deAtom : delete) {
+                    if (deAtom.contains("!")){
+                        beliefs.remove(deAtom.substring(1, deAtom.length()));
+                    } else if (!deAtom.contains("!")){
+                        beliefs.remove("!" + deAtom);
+                    }
+                    beliefs.remove(deAtom);
+                }*/
+            }
         }
 
+    }
+
+    /*
+    * 所有plan和action的前置条件检查
+    * */
+    private boolean condition(String event){
+        System.out.println("checking "+ event +"'s pre condition");
+        // 存储preCon
+        List<String> condition = new ArrayList<>();
+        condition.addAll(preCon.get(event));
+
+        boolean flag = true;
+
+        // 检查是否满足preCon
+        // condition.toString()输出的不是"true", 而是"[true]"
+        if (condition.toString().equals("[true]")) {
+            // 不做任何更改
+        } else if(condition.toString().equals("[false]")){
+            flag = false;
+        } else if (!beliefs.containsAll(condition)){
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    /*
+    * 执行goal
+    * */
+    private void executeGoal (String goalName){
+
+        System.out.println("executing goal " + goalName);
+
+        List<String> goal = new ArrayList<>();
+
+        goal.addAll(goals.get(goalName));
+
+        while (true){
+            // 检查goal的第三个元素是true还是false
+            // 如果是false就执行
+            // 如果是true就失败
+            if (!condition(goal.get(2))){
+                execute(goal.get(1));
+            }
+
+            // 执行完语句后检查是否成功
+            // 即goal的目标是否包含在了belief里
+            // 如果包含的话就说明执行成功，打破循环
+            // 如果没有包含的话就说明执行失败，循环重试
+            if (beliefs.contains(goal.get(0))){
+                break;
+            }
+        }
     }
 }
