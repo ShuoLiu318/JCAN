@@ -31,7 +31,7 @@ planBody
     ;
 
 preCon
-    : atom (',' atom)*              # preCondition
+    : atom              # preCondition
     ;
 
 add

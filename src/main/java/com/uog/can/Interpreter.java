@@ -42,11 +42,6 @@ public class Interpreter extends CANBaseListener {
         atoms.add(ctx.NAME().getText());
     }
 
-    @Override
-    public void exitLogicBeliefs(CANParser.LogicBeliefsContext ctx) {
-        super.exitLogicBeliefs(ctx);
-    }
-
     /*
     * 将遍历到的atoms存到beliefs
     * */
@@ -132,6 +127,19 @@ public class Interpreter extends CANBaseListener {
         {
             atoms.add("false");
         }
+    }
+
+    @Override
+    public void exitLogicBeliefs(CANParser.LogicBeliefsContext ctx) {
+
+        if (ctx.op.getType() == CANParser.AND) {
+            atoms.add(atoms.size() - 1, "&");
+        } else if (ctx.op.getType() == CANParser.OR) {
+            atoms.add(atoms.size() - 1, "|");
+        }
+
+        System.out.println(atoms);
+
     }
 
     @Override
@@ -273,12 +281,65 @@ public class Interpreter extends CANBaseListener {
             // 不做任何更改
         } else if(condition.toString().equals("[false]")){
             flag = false;
+        } else if (condition.size() == 1) {
+            if (!beliefs.contains(condition)){
+                flag = false;
+            }
+        } else if(condition.size() > 1){
+            String con1 = condition.get(0);
+            String op = condition.get(1);
+            String con2 = condition.get(2);
+            Boolean result;
+
+            // 先计算第一个条件的真假，并存储在result中
+            if (beliefs.contains(con1)) {
+                result = true;
+            } else {
+                result = false;
+            }
+
+            for(int i = 2 ; i < condition.size(); i++){
+                op = condition.get(i - 1);
+                con2 = condition.get(i);
+                if (op.equals("&")){
+                    if(result && beliefs.contains(con2)) {
+                        result = true;
+                    } else {
+                        result = false;
+                    }
+                } else if (op.equals("|")){
+                    if(beliefs.contains(con1) || beliefs.contains(con2)) {
+                        result = true;
+                    } else {
+                        result = false;
+                    }
+                }
+            }
+        }
+
+        return flag;
+    }
+
+    /*private boolean preCondition(String event){
+        System.out.println("checking "+ event +"'s pre condition");
+        // 存储preCon
+        List<String> condition = new ArrayList<>();
+        condition.addAll(preCon.get(event));
+
+        boolean flag = true;
+
+        // 检查是否满足preCon
+        // condition.toString()输出的不是"true", 而是"[true]"
+        if (condition.toString().equals("[true]")) {
+            // 不做任何更改
+        } else if(condition.toString().equals("[false]")){
+            flag = false;
         } else if (!beliefs.containsAll(condition)){
             flag = false;
         }
 
         return flag;
-    }
+    }*/
 
     /*
     * 执行goal
