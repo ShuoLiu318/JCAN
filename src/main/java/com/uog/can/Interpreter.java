@@ -201,7 +201,7 @@ public class Interpreter extends CANBaseListener {
 
         System.out.println("executing " + event);
 
-        if(condition(event)){
+        if(preCondition(event)){
             if (plans.contains(event)){
                 System.out.println("executing plan " + event);
                 List<String> programs = new ArrayList<>();
@@ -252,7 +252,7 @@ public class Interpreter extends CANBaseListener {
     /*
     * 所有plan和action的前置条件检查
     * */
-    private boolean condition(String event){
+    private boolean preCondition(String event){
         System.out.println("checking "+ event +"'s pre condition");
         // 存储preCon
         List<String> condition = new ArrayList<>();
@@ -288,7 +288,7 @@ public class Interpreter extends CANBaseListener {
             // 检查goal的第三个元素是true还是false
             // 如果是false就执行
             // 如果是true就失败
-            if (!condition(goal.get(2))){
+            if (!goalCondition(goal.get(2))){
                 execute(goal.get(1));
             }
 
@@ -299,6 +299,28 @@ public class Interpreter extends CANBaseListener {
             if (beliefs.contains(goal.get(0))){
                 break;
             }
+        }
+    }
+
+    /*
+    * 检查goal的条件
+    * */
+    private boolean goalCondition(String atom3) {
+
+        System.out.println("checking goal's condition");
+
+        if (atom3.equals("[true]")) {
+            return true;
+        } else if(atom3.equals("[false]")){
+            return false;
+        } else {
+
+            if (beliefs.contains(atom3)){
+                return true;
+            }else{
+                return false;
+            }
+
         }
     }
 }
