@@ -287,31 +287,29 @@ public class Interpreter extends CANBaseListener {
             }
         } else if(condition.size() > 1){
             String con1 = condition.get(0);
-            String op = condition.get(1);
-            String con2 = condition.get(2);
-            Boolean result;
+            String op, con2;
 
             // 先计算第一个条件的真假，并存储在result中
             if (beliefs.contains(con1)) {
-                result = true;
+                flag = true;
             } else {
-                result = false;
+                flag = false;
             }
-
+            // 循环与后面的原子进行对比
             for(int i = 2 ; i < condition.size(); i++){
                 op = condition.get(i - 1);
                 con2 = condition.get(i);
                 if (op.equals("&")){
-                    if(result && beliefs.contains(con2)) {
-                        result = true;
+                    if(flag && beliefs.contains(con2)) {
+                        flag = true;
                     } else {
-                        result = false;
+                        flag = false;
                     }
                 } else if (op.equals("|")){
                     if(beliefs.contains(con1) || beliefs.contains(con2)) {
-                        result = true;
+                        flag = true;
                     } else {
-                        result = false;
+                        flag = false;
                     }
                 }
             }
@@ -376,6 +374,7 @@ public class Interpreter extends CANBaseListener {
     private boolean goalCondition(String atom3) {
 
         System.out.println("checking goal's condition");
+
 
         if (atom3.equals("[true]")) {
             return true;
