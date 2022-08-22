@@ -100,6 +100,18 @@ public class CANBaseListener implements CANListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLogicBeliefs(CANParser.LogicBeliefsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogicBeliefs(CANParser.LogicBeliefsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNegation(CANParser.NegationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -148,18 +160,6 @@ public class CANBaseListener implements CANListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBeliefs(CANParser.BeliefsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBeliefs(CANParser.BeliefsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterAtomName(CANParser.AtomNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -196,13 +196,13 @@ public class CANBaseListener implements CANListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCondition(CANParser.ConditionContext ctx) { }
+	@Override public void enterPreCondition(CANParser.PreConditionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCondition(CANParser.ConditionContext ctx) { }
+	@Override public void exitPreCondition(CANParser.PreConditionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

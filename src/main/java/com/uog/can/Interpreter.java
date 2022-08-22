@@ -9,6 +9,9 @@ public class Interpreter extends CANBaseListener {
     // 用于交换变量
     private List<String> atoms = new ArrayList<>();
     // 存储所有的belief
+
+    // private Map<String, Boolean> beliefs = new HashMap<>();
+
     private List<String> beliefs = new ArrayList<>(); // to-do: 用一个map存储所有的list，key为belief的name，value为boolean
     // 存储所有的event
     private List<String> events = new ArrayList<>();
@@ -37,6 +40,11 @@ public class Interpreter extends CANBaseListener {
     @Override
     public void exitAtomName(CANParser.AtomNameContext ctx) {
         atoms.add(ctx.NAME().getText());
+    }
+
+    @Override
+    public void exitLogicBeliefs(CANParser.LogicBeliefsContext ctx) {
+        super.exitLogicBeliefs(ctx);
     }
 
     /*
@@ -111,7 +119,7 @@ public class Interpreter extends CANBaseListener {
     }
 
     @Override
-    public void enterCondition(CANParser.ConditionContext ctx) {
+    public void enterPreCondition(CANParser.PreConditionContext ctx) {
         atoms.clear();
     }
 
@@ -127,8 +135,7 @@ public class Interpreter extends CANBaseListener {
     }
 
     @Override
-    public void exitCondition(CANParser.ConditionContext ctx) {
-
+    public void exitPreCondition(CANParser.PreConditionContext ctx) {
         List<String> conBelief = new ArrayList<>();
 
         conBelief.addAll(atoms);

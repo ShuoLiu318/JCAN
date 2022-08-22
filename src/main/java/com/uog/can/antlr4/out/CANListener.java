@@ -90,6 +90,18 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitAction(CANParser.ActionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code logicBeliefs}
+	 * labeled alternative in {@link CANParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicBeliefs(CANParser.LogicBeliefsContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logicBeliefs}
+	 * labeled alternative in {@link CANParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicBeliefs(CANParser.LogicBeliefsContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code negation}
 	 * labeled alternative in {@link CANParser#atom}.
 	 * @param ctx the parse tree
@@ -138,18 +150,6 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitPrograms(CANParser.ProgramsContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code beliefs}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void enterBeliefs(CANParser.BeliefsContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code beliefs}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void exitBeliefs(CANParser.BeliefsContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code atomName}
 	 * labeled alternative in {@link CANParser#atom}.
 	 * @param ctx the parse tree
@@ -184,17 +184,17 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitPlanBody(CANParser.PlanBodyContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code condition}
+	 * Enter a parse tree produced by the {@code preCondition}
 	 * labeled alternative in {@link CANParser#preCon}.
 	 * @param ctx the parse tree
 	 */
-	void enterCondition(CANParser.ConditionContext ctx);
+	void enterPreCondition(CANParser.PreConditionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code condition}
+	 * Exit a parse tree produced by the {@code preCondition}
 	 * labeled alternative in {@link CANParser#preCon}.
 	 * @param ctx the parse tree
 	 */
-	void exitCondition(CANParser.ConditionContext ctx);
+	void exitPreCondition(CANParser.PreConditionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code addBelief}
 	 * labeled alternative in {@link CANParser#add}.

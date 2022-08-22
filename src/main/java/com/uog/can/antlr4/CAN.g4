@@ -19,7 +19,7 @@ expr
 atom
     : NAME                                      # atomName
     | ('true'|'false')                          # bool
-    | atom (op = ('&'|'|')) atom                # beliefs
+    | atom (op = ('&'|'|')) atom                # logicBeliefs
     | atom (op = ('>>'|'||')) atom              # programs
     | 'nil'                                     # empty
     | (op = '!') atom                           # negation
@@ -31,7 +31,7 @@ planBody
     ;
 
 preCon
-    : atom (',' atom)*              # condition
+    : atom (',' atom)*              # preCondition
     ;
 
 add

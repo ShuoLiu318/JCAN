@@ -482,6 +482,26 @@ public class CANParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class LogicBeliefsContext extends AtomContext {
+		public Token op;
+		public List<AtomContext> atom() {
+			return getRuleContexts(AtomContext.class);
+		}
+		public AtomContext atom(int i) {
+			return getRuleContext(AtomContext.class,i);
+		}
+		public TerminalNode AND() { return getToken(CANParser.AND, 0); }
+		public TerminalNode OR() { return getToken(CANParser.OR, 0); }
+		public LogicBeliefsContext(AtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CANListener ) ((CANListener)listener).enterLogicBeliefs(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CANListener ) ((CANListener)listener).exitLogicBeliefs(this);
+		}
+	}
 	public static class NegationContext extends AtomContext {
 		public Token op;
 		public AtomContext atom() {
@@ -544,26 +564,6 @@ public class CANParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof CANListener ) ((CANListener)listener).exitPrograms(this);
-		}
-	}
-	public static class BeliefsContext extends AtomContext {
-		public Token op;
-		public List<AtomContext> atom() {
-			return getRuleContexts(AtomContext.class);
-		}
-		public AtomContext atom(int i) {
-			return getRuleContext(AtomContext.class,i);
-		}
-		public TerminalNode AND() { return getToken(CANParser.AND, 0); }
-		public TerminalNode OR() { return getToken(CANParser.OR, 0); }
-		public BeliefsContext(AtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).enterBeliefs(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).exitBeliefs(this);
 		}
 	}
 	public static class AtomNameContext extends AtomContext {
@@ -699,16 +699,16 @@ public class CANParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
-						_localctx = new BeliefsContext(new AtomContext(_parentctx, _parentState));
+						_localctx = new LogicBeliefsContext(new AtomContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_atom);
 						setState(92);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						{
 						setState(93);
-						((BeliefsContext)_localctx).op = _input.LT(1);
+						((LogicBeliefsContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==AND || _la==OR) ) {
-							((BeliefsContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((LogicBeliefsContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -833,21 +833,21 @@ public class CANParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class ConditionContext extends PreConContext {
+	public static class PreConditionContext extends PreConContext {
 		public List<AtomContext> atom() {
 			return getRuleContexts(AtomContext.class);
 		}
 		public AtomContext atom(int i) {
 			return getRuleContext(AtomContext.class,i);
 		}
-		public ConditionContext(PreConContext ctx) { copyFrom(ctx); }
+		public PreConditionContext(PreConContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).enterCondition(this);
+			if ( listener instanceof CANListener ) ((CANListener)listener).enterPreCondition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CANListener ) ((CANListener)listener).exitCondition(this);
+			if ( listener instanceof CANListener ) ((CANListener)listener).exitPreCondition(this);
 		}
 	}
 
@@ -856,7 +856,7 @@ public class CANParser extends Parser {
 		enterRule(_localctx, 10, RULE_preCon);
 		int _la;
 		try {
-			_localctx = new ConditionContext(_localctx);
+			_localctx = new PreConditionContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(111);
