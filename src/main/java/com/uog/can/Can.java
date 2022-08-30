@@ -51,8 +51,7 @@ public class Can {
 
 
     private static void run(String source) {
-        /*Scanner scanner = new Scanner(source);
-        List<Token> tokens = scanner.scanTokens();*/
+
 
         // 对每一个输入的字符串，构造一个 ANTLRStringStream 流 in
         ANTLRInputStream input = new ANTLRInputStream(source);
@@ -70,6 +69,10 @@ public class Can {
 
         System.out.println(tree.toStringTree(parser));
 
+
+
+        /*Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();*/
 
         /*// For now, just print the tokens.
         for (Token token : tokens) {

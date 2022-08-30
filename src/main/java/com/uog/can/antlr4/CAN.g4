@@ -20,7 +20,6 @@ atom
     : NAME                                      # atomName
     | ('true'|'false')                          # bool
     | atom (op = ('&'|'|')) atom                # logicBeliefs
-    | atom (op = ('>>'|'||')) atom              # programs
     | 'nil'                                     # empty
     | (op = '!') atom                           # negation
     | 'goal' '(' atom ',' atom ',' atom ')'     # goal
@@ -53,10 +52,23 @@ ACTION : 'Action';
 // op
 AND : '&';
 OR : '|';
-PARALLEL : '||';
 NEGATION : '!';
+
+NAME
+    : [a-zA-Z_][a-zA-Z_0-9]*
+    ;
+
+NEWLINE:'\r'? '\n' ;                                                                                // 换行
+WS  :   [ \t]+ -> skip ;                                                    // 匹配空白，按->skip命令跳过
+
+// comment
+COMMENT: '//' ~[\n\r]* ( [\n\r] | EOF) -> channel(HIDDEN) ;
+MULTILINE_COMMENT: '/*' ( MULTILINE_COMMENT | . )*? ('*/' | EOF) -> channel(HIDDEN);
+
+
+//PARALLEL : '||';
+//FAIL : '>>';
 // SEQ : ';';
-FAIL : '>>';
 
 /*
 // op
@@ -69,16 +81,4 @@ op
     |  ';'
     ;
 */
-
-NAME
-    : [a-zA-Z_][a-zA-Z_0-9]*
-    ;
-
-NEWLINE:'\r'? '\n' ;     // 换行
-WS  :   [ \t]+ -> skip ; // 匹配空白，按->skip命令跳过
-
-// comment
-COMMENT: '//' ~[\n\r]* ( [\n\r] | EOF) -> channel(HIDDEN) ;
-MULTILINE_COMMENT: '/*' ( MULTILINE_COMMENT | . )*? ('*/' | EOF) -> channel(HIDDEN);
-
 

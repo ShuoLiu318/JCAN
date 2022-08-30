@@ -26,8 +26,8 @@ public class Interpreter extends CANBaseListener {
     // 存储所有的goal, key是goal的名字，List是goal的三个atom
     private Map<String, List> goals = new HashMap<>();
     // 存储所有的action中的加变量和减变量操作
-    Map<String, List> addBelief = new HashMap<>();
-    Map<String, List> deleteBelief = new HashMap<>();
+    private Map<String, List> addBelief = new HashMap<>();
+    private Map<String, List> deleteBelief = new HashMap<>();
     int goalCount = 0;
     // 当前正在遍历的plan或action的name
     String current;
@@ -317,27 +317,6 @@ public class Interpreter extends CANBaseListener {
 
         return flag;
     }
-
-    /*private boolean preCondition(String event){
-        System.out.println("checking "+ event +"'s pre condition");
-        // 存储preCon
-        List<String> condition = new ArrayList<>();
-        condition.addAll(preCon.get(event));
-
-        boolean flag = true;
-
-        // 检查是否满足preCon
-        // condition.toString()输出的不是"true", 而是"[true]"
-        if (condition.toString().equals("[true]")) {
-            // 不做任何更改
-        } else if(condition.toString().equals("[false]")){
-            flag = false;
-        } else if (!beliefs.containsAll(condition)){
-            flag = false;
-        }
-
-        return flag;
-    }*/
 
     /*
     * 执行goal
