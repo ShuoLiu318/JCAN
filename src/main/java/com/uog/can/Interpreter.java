@@ -23,14 +23,20 @@ public class Interpreter extends CANBaseListener {
     private Map<String, List> preCon = new HashMap<>();
     // 存储所有的planBody中的program，key为plan的name，value为所有的program，如果遇到goal，就设置一个goal的名字。
     private Map<String, List> planBody = new HashMap<>();
-    // 存储所有的goal, key是goal的名字，List是goal的三个atom
+    // 存储所有的goal, key是goal的名字，List是goal的第一个atom列表
     private Map<String, List> goals = new HashMap<>();
+    // 存储所有的goal的行为，key为goal的名字，value是goal为了达成目标要运行的程序
+    private Map<String, List> goalProgram = new HashMap<>();
+    // 存储所有的goal的条件，key为goal的名字，value是goal的condition
+    private Map<String, List> goalCon = new HashMap<>();
     // 存储所有的action中的加变量和减变量操作
     private Map<String, List> addBelief = new HashMap<>();
     private Map<String, List> deleteBelief = new HashMap<>();
+
     int goalCount = 0;
     // 当前正在遍历的plan或action的name
     String current;
+    String goalName;
     // 存储共有多少行代码
     int line = 0;
 
@@ -74,36 +80,80 @@ public class Interpreter extends CANBaseListener {
     }
 
     @Override
-    public void exitPlanBody(CANParser.PlanBodyContext ctx) {
-        List<String> body = new ArrayList<>();
+    public void exitPlanbody(CANParser.PlanbodyContext ctx) {
 
-        body.addAll(atoms);
+        List<String> pb = new ArrayList<>();
 
-        planBody.put(current, body);
+        pb.addAll(atoms);
+
+        planBody.put(current, pb);
 
         atoms.clear();
+
+        // System.out.println("planBody" + planBody);
     }
 
     @Override
     public void exitGoal(CANParser.GoalContext ctx) {
+        atoms.add(goalName);
+    }
+
+    @Override
+    public void exitDeclarativeGoals(CANParser.DeclarativeGoalsContext ctx) {
 
         goalCount++;
 
-        String goalName = "goal" + goalCount;
+        goalName = "goal" + goalCount;
 
-        List<String> goalAtom = new ArrayList<>();
+        List<String> g = new ArrayList<>();
 
-        for(int i = atoms.size() - 3 ; i < atoms.size() ; i++ ){
-            goalAtom.add(atoms.get(i));
-        }
-
-        for (int i = 0 ; i < 3 ; i++){
+        for(int i = 0 ; i < ctx.atom().getChildCount(); i++){
+            g.add(atoms.get(atoms.size() - 1));
             atoms.remove(atoms.size() - 1);
         }
 
-        goals.put(goalName, goalAtom);
+        Collections.reverse(g);
 
-        atoms.add(goalName);
+        goals.put(goalName, g);
+
+        // System.out.println(goals);
+    }
+
+    @Override
+    public void exitGoalProgram(CANParser.GoalProgramContext ctx) {
+        List<String> program = new ArrayList<>();
+
+        // System.out.println(atoms);
+
+        for(int i = 0 ; i < ctx.atom().getChildCount(); i++){
+            program.add(atoms.get(atoms.size() - 1));
+            atoms.remove(atoms.size() - 1);
+        }
+
+        Collections.reverse(program);
+
+        goalProgram.put(goalName, program);
+
+        // System.out.println(goalProgram);
+    }
+
+    @Override
+    public void exitGoalCon(CANParser.GoalConContext ctx) {
+
+        List<String> con = new ArrayList<>();
+
+        // System.out.println(atoms);
+
+        for(int i = 0 ; i < ctx.atom().getChildCount(); i++){
+            con.add(atoms.get(atoms.size() - 1));
+            atoms.remove(atoms.size() - 1);
+        }
+
+        Collections.reverse(con);
+
+        goalCon.put(goalName, con);
+
+        // System.out.println(goalCon);
     }
 
     @Override
@@ -137,8 +187,6 @@ public class Interpreter extends CANBaseListener {
         } else if (ctx.op.getType() == CANParser.OR) {
             atoms.add(atoms.size() - 1, "|");
         }
-
-        System.out.println(atoms);
 
     }
 
@@ -193,13 +241,13 @@ public class Interpreter extends CANBaseListener {
     @Override
     public void exitC_text(CANParser.C_textContext ctx) {
 
-        System.out.println("belief" + beliefs);
+        /*System.out.println("belief" + beliefs);
         System.out.println("event" + events);
         System.out.println("plans" + plans);
         System.out.println("planBody" + planBody);
         System.out.println("goal" + goals);
         System.out.println("actions" + actions);
-        System.out.println("preCon" + preCon);
+        System.out.println("preCon" + preCon);*/
 
         for (String event : events){
             execute(event);
@@ -250,15 +298,6 @@ public class Interpreter extends CANBaseListener {
 
                 // 删除相应的beliefs原子
                 beliefs.removeAll(delete);
-
-                /*for(String deAtom : delete) {
-                    if (deAtom.contains("!")){
-                        beliefs.remove(deAtom.substring(1, deAtom.length()));
-                    } else if (!deAtom.contains("!")){
-                        beliefs.remove("!" + deAtom);
-                    }
-                    beliefs.remove(deAtom);
-                }*/
             }
         }
 
@@ -273,32 +312,68 @@ public class Interpreter extends CANBaseListener {
         List<String> condition = new ArrayList<>();
         condition.addAll(preCon.get(event));
 
-        boolean flag = true;
 
+        System.out.println(check(condition));
+        return check(condition);
+    }
+
+    /*
+    * 执行goal
+    * */
+    private boolean executeGoal (String goalName){
+
+        System.out.println("executing goal: " + goalName);
+
+        List<String> goal = new ArrayList<>();
+        List<String> programs = new ArrayList<>();
+        List<String> con = new ArrayList<>();
+
+        goal.addAll(goals.get(goalName));
+        programs.addAll(goalProgram.get(goalName));
+        con.addAll(goalCon.get(goalName));
+
+        if (!check(con)) {
+            for (int i = 0; i< programs.size();i++) {
+
+                execute(programs.get(i));
+            }
+
+            if (check(goal)) {
+                return true;
+            } else {
+                return  false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
+    private boolean check(List<String> atoms) {
+        boolean flag = true;
         // 检查是否满足preCon
         // condition.toString()输出的不是"true", 而是"[true]"
-        if (condition.toString().equals("[true]")) {
+        if (atoms.toString().equals("[true]")) {
             // 不做任何更改
-        } else if(condition.toString().equals("[false]")){
+        } else if(atoms.toString().equals("[false]")){
             flag = false;
-        } else if (condition.size() == 1) {
-            if (!beliefs.contains(condition)){
+        } else if (atoms.size() == 1) {
+            if (!beliefs.contains(atoms)){
                 flag = false;
             }
-        } else if(condition.size() > 1){
-            String con1 = condition.get(0);
+        } else if(atoms.size() > 1){
+            String con1 = atoms.get(0);
             String op, con2;
-
-            // 先计算第一个条件的真假，并存储在result中
+            // 先计算第一个条件的真假，并存储在flag中
             if (beliefs.contains(con1)) {
                 flag = true;
             } else {
                 flag = false;
             }
             // 循环与后面的原子进行对比
-            for(int i = 2 ; i < condition.size(); i++){
-                op = condition.get(i - 1);
-                con2 = condition.get(i);
+            for(int i = 2 ; i < atoms.size(); i++){
+                op = atoms.get(i - 1);
+                con2 = atoms.get(i);
                 if (op.equals("&")){
                     if(flag && beliefs.contains(con2)) {
                         flag = true;
@@ -318,55 +393,6 @@ public class Interpreter extends CANBaseListener {
         return flag;
     }
 
-    /*
-    * 执行goal
-    * */
-    private void executeGoal (String goalName){
-
-        System.out.println("executing goal " + goalName);
-
-        List<String> goal = new ArrayList<>();
-
-        goal.addAll(goals.get(goalName));
-
-        while (true){
-            // 检查goal的第三个元素是true还是false
-            // 如果是false就执行
-            // 如果是true就失败
-            if (!goalCondition(goal.get(2))){
-                execute(goal.get(1));
-            }
-
-            // 执行完语句后检查是否成功
-            // 即goal的目标是否包含在了belief里
-            // 如果包含的话就说明执行成功，打破循环
-            // 如果没有包含的话就说明执行失败，循环重试
-            if (beliefs.contains(goal.get(0))){
-                break;
-            }
-        }
-    }
-
-    /*
-    * 检查goal的条件
-    * */
-    private boolean goalCondition(String atom3) {
-
-        System.out.println("checking goal's condition");
 
 
-        if (atom3.equals("[true]")) {
-            return true;
-        } else if(atom3.equals("[false]")){
-            return false;
-        } else {
-
-            if (beliefs.contains(atom3)){
-                return true;
-            }else{
-                return false;
-            }
-
-        }
-    }
 }

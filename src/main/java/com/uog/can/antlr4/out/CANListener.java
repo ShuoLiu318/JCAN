@@ -138,18 +138,6 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitBool(CANParser.BoolContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code programs}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrograms(CANParser.ProgramsContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code programs}
-	 * labeled alternative in {@link CANParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrograms(CANParser.ProgramsContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code atomName}
 	 * labeled alternative in {@link CANParser#atom}.
 	 * @param ctx the parse tree
@@ -174,15 +162,51 @@ public interface CANListener extends ParseTreeListener {
 	 */
 	void exitEmpty(CANParser.EmptyContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CANParser#planBody}.
+	 * Enter a parse tree produced by {@link CANParser#planbody}.
 	 * @param ctx the parse tree
 	 */
-	void enterPlanBody(CANParser.PlanBodyContext ctx);
+	void enterPlanbody(CANParser.PlanbodyContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CANParser#planBody}.
+	 * Exit a parse tree produced by {@link CANParser#planbody}.
 	 * @param ctx the parse tree
 	 */
-	void exitPlanBody(CANParser.PlanBodyContext ctx);
+	void exitPlanbody(CANParser.PlanbodyContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code declarativeGoals}
+	 * labeled alternative in {@link CANParser#goals}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclarativeGoals(CANParser.DeclarativeGoalsContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code declarativeGoals}
+	 * labeled alternative in {@link CANParser#goals}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclarativeGoals(CANParser.DeclarativeGoalsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code goalProgram}
+	 * labeled alternative in {@link CANParser#goalP}.
+	 * @param ctx the parse tree
+	 */
+	void enterGoalProgram(CANParser.GoalProgramContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code goalProgram}
+	 * labeled alternative in {@link CANParser#goalP}.
+	 * @param ctx the parse tree
+	 */
+	void exitGoalProgram(CANParser.GoalProgramContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code goalCon}
+	 * labeled alternative in {@link CANParser#goalCondition}.
+	 * @param ctx the parse tree
+	 */
+	void enterGoalCon(CANParser.GoalConContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code goalCon}
+	 * labeled alternative in {@link CANParser#goalCondition}.
+	 * @param ctx the parse tree
+	 */
+	void exitGoalCon(CANParser.GoalConContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code preCondition}
 	 * labeled alternative in {@link CANParser#preCon}.

@@ -67,7 +67,7 @@ public class Can {
         ParseTreeWalker walker = new ParseTreeWalker();		//创建分析树的遍历器
         walker.walk(new Interpreter(), tree);
 
-        System.out.println(tree.toStringTree(parser));
+        // System.out.println(tree.toStringTree(parser));
 
 
 

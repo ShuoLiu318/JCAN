@@ -1,7 +1,10 @@
 initBelief {beliefA, beliefB}
 externalEvent {p1}
 
-Plan p1: true <- goal(beliefC,p2,false)
+Plan p1: true <- goal(beliefA | beliefB,p2,false)
 Plan p2 : beliefA&beliefB <- act
 Action act : true <- <{beliefC},{beliefA}>
+
+// Plan p: beliefA&beliefB <- a; goal(beliefB | beliefC, act, false); b
+
 

@@ -148,18 +148,6 @@ public class CANBaseListener implements CANListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrograms(CANParser.ProgramsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrograms(CANParser.ProgramsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterAtomName(CANParser.AtomNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -184,13 +172,49 @@ public class CANBaseListener implements CANListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPlanBody(CANParser.PlanBodyContext ctx) { }
+	@Override public void enterPlanbody(CANParser.PlanbodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPlanBody(CANParser.PlanBodyContext ctx) { }
+	@Override public void exitPlanbody(CANParser.PlanbodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclarativeGoals(CANParser.DeclarativeGoalsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclarativeGoals(CANParser.DeclarativeGoalsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGoalProgram(CANParser.GoalProgramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGoalProgram(CANParser.GoalProgramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGoalCon(CANParser.GoalConContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGoalCon(CANParser.GoalConContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

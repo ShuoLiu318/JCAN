@@ -12,7 +12,7 @@ stat
 expr
     : (type = 'initBelief') '{' atom (',' atom)* '}'                                       # initBelief
     | (type = 'externalEvent') '{' atom (',' atom)* '}'                                    # externalEvent
-    | (type = 'Plan') atom ':' preCon '<-' planBody                                        # plan
+    | (type = 'Plan') atom ':' preCon '<-' planbody                                        # plan
     | (type = 'Action') atom ':' preCon '<-' '<' '{' add '}' ',' '{' delete '}' '>'        # action
     ;
 
@@ -22,11 +22,23 @@ atom
     | atom (op = ('&'|'|')) atom                # logicBeliefs
     | 'nil'                                     # empty
     | (op = '!') atom                           # negation
-    | 'goal' '(' atom ',' atom ',' atom ')'     # goal
+    | 'goal' '(' goals ',' goalP ',' goalCondition ')'     # goal
     ;
 
-planBody
+planbody
     : atom (';' atom)*
+    ;
+
+goals
+    : atom          # declarativeGoals
+    ;
+
+goalP
+    : atom          # goalProgram
+    ;
+
+goalCondition
+    : atom              # goalCon
     ;
 
 preCon
@@ -40,8 +52,6 @@ add
 delete
     : atom (',' atom)*  # deleteBelief
     ;
-
-
 
 // atomType
 BELIEFS : 'initBelief';
@@ -59,7 +69,7 @@ NAME
     ;
 
 NEWLINE:'\r'? '\n' ;                                                                                // 换行
-WS  :   [ \t]+ -> skip ;                                                    // 匹配空白，按->skip命令跳过
+WS  :   [ \t]+ -> skip ;                                                                            // 匹配空白，按->skip命令跳过
 
 // comment
 COMMENT: '//' ~[\n\r]* ( [\n\r] | EOF) -> channel(HIDDEN) ;
