@@ -23,7 +23,6 @@ public class Can {
      * give it a path to a file
      * read the file and executes it
      * */
-
     private static void runFile(String path) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
@@ -35,7 +34,6 @@ public class Can {
      * when readLine() returns null
      * check for that to exit the loop
      * */
-
     private static void runPrompt() throws IOException {
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
@@ -49,10 +47,7 @@ public class Can {
         }
     }
 
-
     private static void run(String source) {
-
-
         // 对每一个输入的字符串，构造一个 ANTLRStringStream 流 in
         ANTLRInputStream input = new ANTLRInputStream(source);
         // 用 in 构造词法分析器 lexer，词法分析的作用是将字符聚集成单词或者符号
@@ -69,8 +64,6 @@ public class Can {
 
         // System.out.println(tree.toStringTree(parser));
 
-
-
         /*Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();*/
 
@@ -86,31 +79,19 @@ public class Can {
 
      /** tell the user some syntax error occurred on a given line
      */
-
     static void error(int line, String message) {
         report(line, "", message);
     }
 
      /** show the user the offending line
      */
-
     private static void report(int line, String where, String message) {
         System.err.println(
                 "[line " + line + "] Error" + where + ": " + message);
         hadError = true;
     }
 
-
     public static void main(String[] args) throws IOException {
-       /* if (args.length > 1) {
-            System.out.println("Usage: jcan [script]");
-            System.exit(64);
-        } else if (args.length == 1) {
-            runFile(args[0]);
-        } else {
-            runPrompt();
-        }*/
-
         runFile( "src/main/java/com/uog/can/test/demo");
     }
 }
